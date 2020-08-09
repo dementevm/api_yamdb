@@ -1,8 +1,6 @@
 .git/*
 env/
-.venv
 venv/
-.venv/
 
 __pycache__/
 *.py[cod]
@@ -20,6 +18,7 @@ media/
 
 db.sqlite3
 
+sent_emails/
+
 .vscode/
 vscode/
-.vscode/
