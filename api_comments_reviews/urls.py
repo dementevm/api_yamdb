@@ -5,7 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 
-from api.views import CommentViewSet, ReviewViewSet
+from api_comments_reviews.views import CommentViewSet, ReviewViewSet
 
 v1_router = DefaultRouter()
 v1_router.register(

@@ -3,9 +3,9 @@ from rest_framework import viewsets
 from rest_framework.generics import get_object_or_404
 from rest_framework.serializers import ValidationError
 
-from api.models import Review, Title
-from api.permissions import HasPermissionsOrReadOnly
-from api.serializers import CommentSerializer, ReviewSerializer
+from api_comments_reviews.models import Review, Title
+from api_comments_reviews.permissions import HasPermissionsOrReadOnly
+from api_comments_reviews.serializers import CommentSerializer, ReviewSerializer
 
 
 class CommentViewSet(viewsets.ModelViewSet):
