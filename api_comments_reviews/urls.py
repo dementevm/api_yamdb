@@ -1,7 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-
 from api_comments_reviews.views import CommentViewSet, ReviewViewSet
 
 v1_router = DefaultRouter()

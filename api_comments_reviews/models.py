@@ -1,6 +1,5 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db import models
 
 from api_titles_genres_categories.models import Titles, Genres
 
@@ -13,10 +12,7 @@ class Review(models.Model):
     text = models.CharField(max_length=400)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
                                related_name='reviews')
-    score = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(1),
-                    MaxValueValidator(10)]
-    )
+    score = models.PositiveSmallIntegerField()
     pub_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
