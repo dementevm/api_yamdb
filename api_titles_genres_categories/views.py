@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Avg
 from rest_framework import mixins, viewsets
 from rest_framework.filters import SearchFilter
 from rest_framework.pagination import PageNumberPagination
@@ -38,7 +39,7 @@ class GenresViewSet(mixins.CreateModelMixin,
 
 
 class TitlesViewSet(viewsets.ModelViewSet):
-    queryset = Titles.objects.all()
+    queryset = Titles.objects.all().annotate(rating=Avg('reviews__score'))
     permission_classes = (IsAuthenticatedOrReadOnly, IsAdminUserOrReadOnly, )
     filter_backends = [DjangoFilterBackend]
     filterset_class = TitlesFilter

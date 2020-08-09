@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api_comments_reviews',
     'api_titles_genres_categories',
-    'api_users'
+    'api_users',
     'rest_framework',
     'django_filters',
 ]
