@@ -12,7 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    'api',
+    'api_users',
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
