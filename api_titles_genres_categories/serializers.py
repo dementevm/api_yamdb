@@ -10,15 +10,14 @@ class CategoriesSerializer(serializers.ModelSerializer):
             queryset=Categories.objects.all())])
 
     class Meta:
-        exclude = ('id', )
+        exclude = ('id',)
         lookup_field = 'slug'
         model = Categories
 
 
 class GenresSerializer(serializers.ModelSerializer):
-
     class Meta:
-        exclude = ('id', )
+        exclude = ('id',)
         lookup_field = 'slug'
         model = Genres
 

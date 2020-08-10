@@ -4,15 +4,16 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.serializers import ValidationError
 
 from api_comments_reviews.models import Review
-from api_comments_reviews.permissions import HasPermissionsOrReadOnly
-from api_comments_reviews.serializers import CommentSerializer, ReviewSerializer
+from api_comments_reviews.serializers import CommentSerializer, \
+    ReviewSerializer
 from api_titles_genres_categories.models import Titles
+from api_users.permissions import IsStaffOrReadOnly
 
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          HasPermissionsOrReadOnly)
+                          IsStaffOrReadOnly)
 
     def get_queryset(self):
         review = get_object_or_404(Review, id=self.kwargs['review_id'],
@@ -23,13 +24,13 @@ class CommentViewSet(viewsets.ModelViewSet):
         get_object_or_404(Review, id=self.kwargs['review_id'])
         get_object_or_404(Titles, id=self.kwargs['title_id'])
         return serializer.save(author=self.request.user,
-                               review_id=self.kwargs['review_id'],)
+                               review_id=self.kwargs['review_id'], )
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          HasPermissionsOrReadOnly)
+                          IsStaffOrReadOnly)
     ordering = ['pub_date']
 
     def get_queryset(self):

@@ -1,21 +1,21 @@
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+from django.contrib.auth.models import (BaseUserManager, AbstractBaseUser)
 from django.db import models
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None):
+    def create_user(self, email, username, password=None):
         if not email:
-            raise ValueError('***')
-        user = self.model(email=self.normalize_email(email))
+            raise ValueError('Email is required')
+        user = self.model(email=self.normalize_email(email),
+                          username=username)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, username=None):
+    def create_superuser(self, email, username, password=None):
         user = self.create_user(email=self.normalize_email(email),
-                                password=password)
+                                password=password,
+                                username=username)
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
@@ -33,7 +33,7 @@ class User(AbstractBaseUser):
 
     email = models.EmailField(verbose_name='email', max_length=30, unique=True,
                               blank=False)
-    username = models.CharField(max_length=20)
+    username = models.CharField(max_length=20, unique=True)
     date_joinded = models.DateTimeField(verbose_name='date joined',
                                         auto_now_add=True)
     last_login = models.DateTimeField(verbose_name='last login', auto_now=True)
