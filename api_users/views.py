@@ -57,7 +57,7 @@ class UserViewSet(viewsets.ModelViewSet):
     lookup_field = 'username'
     permission_classes = [IsAdmin]
     filter_backends = [filters.SearchFilter]
-    search_fields = ['user__username', ]
+    search_fields = ['username', ]
 
 
 @api_view(['GET', 'PATCH'])
