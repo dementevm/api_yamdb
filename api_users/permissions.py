@@ -5,13 +5,13 @@ class IsModerator(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
             return bool(
-                request.user.role == 'moderator' or request.user.is_staff)
+                request.user.role == 'moderator')
 
 
 class IsAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated:
-            return bool(request.user.role == 'admin' or request.user.is_admin)
+            return bool(request.user.role == 'admin')
 
 
 class IsAdminOrReadOnly(permissions.BasePermission):
@@ -19,7 +19,7 @@ class IsAdminOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
         if request.user.is_authenticated:
-            return bool(request.user.role == 'admin' or request.user.is_admin)
+            return bool(request.user.role == 'admin')
 
 
 class IsModeratorOrReadOnly(permissions.BasePermission):
@@ -28,7 +28,7 @@ class IsModeratorOrReadOnly(permissions.BasePermission):
             return True
         if request.user.is_authenticated:
             return bool(
-                request.user.role == 'moderator' or request.user.is_staff)
+                request.user.role == 'moderator')
 
 
 class IsStaffOrReadOnly(permissions.BasePermission):

@@ -1,12 +1,15 @@
+from uuid import uuid4
+
 from django.contrib.auth.hashers import check_password, make_password
-from django.contrib.auth.models import BaseUserManager
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, permissions, status, filters
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import action
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
+from api_yamdb.settings import DEFAULT_FROM_EMAIL
 from .models import User
 from .permissions import IsAdmin
 from .serializers import UserSerializer, CreateAuthKeySerializer, \
@@ -17,20 +20,17 @@ from .serializers import UserSerializer, CreateAuthKeySerializer, \
 def api_auth_key(request):
     serializer = CreateAuthKeySerializer(data=request.data)
     email = request.data['email']
-    if serializer.is_valid():
-        b = BaseUserManager()
-        abc = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-        auth_code = b.make_random_password(length=10, allowed_chars=abc)
-        user = User.objects.get(email=email)
-        user.auth_code = make_password(auth_code)
-        user.save()
-        send_mail('Your auth code',
-                  f'Your auth code {auth_code}',
-                  'yamdb@yamdb.ru',
-                  {user.email})
-        return Response(f'Code send to {user.email}',
-                        status=status.HTTP_200_OK)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    serializer.is_valid(raise_exception=True)
+    auth_code = uuid4()
+    user = get_object_or_404(User, email=email)
+    user.auth_code = make_password(auth_code)
+    user.save()
+    send_mail('Your auth code',
+              f'Your auth code {auth_code}',
+              DEFAULT_FROM_EMAIL,
+              {user.email})
+    return Response(f'Code send to {user.email}',
+                    status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
@@ -59,17 +59,15 @@ class UserViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['username', ]
 
-
-@api_view(['GET', 'PATCH'])
-@permission_classes([permissions.IsAuthenticated])
-def get_current_user(request):
-    user = request.user
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    elif request.method == 'PATCH':
-        serializer = UserSerializer(user, data=request.data, partial=True)
-        if serializer.is_valid():
+    @action(detail=False, methods=['GET', 'PATCH'],
+            permission_classes=[permissions.IsAuthenticated])
+    def me(self, request):
+        user = request.user
+        if request.method == 'GET':
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        elif request.method == 'PATCH':
+            serializer = UserSerializer(user, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

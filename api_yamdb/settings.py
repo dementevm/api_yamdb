@@ -95,6 +95,9 @@ USE_L10N = True
 USE_TZ = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+
+DEFAULT_FROM_EMAIL = 'yamdb@yamdb.ru'
+
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
 STATIC_URL = '/static/'
