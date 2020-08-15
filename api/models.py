@@ -21,9 +21,9 @@ class Titles(models.Model):
     name = models.CharField(max_length=200)
     year = models.PositiveSmallIntegerField()
     description = models.TextField(null=True)
-    genre = models.ManyToManyField(Genres)
+    genre = models.ManyToManyField(Genres, related_name='titles_genre')
     category = models.ForeignKey(
-        Categories, on_delete=models.CASCADE, related_name='category')
+        Categories, on_delete=models.CASCADE, related_name='titles_category')
 
     def __str__(self):
         return f'{self.pk} {self.name}'
