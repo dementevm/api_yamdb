@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from .models import Categories, Genres, Titles
+from .models import Category, Genre, Title
 
 
 class CategoriesSerializer(serializers.ModelSerializer):

@@ -1,13 +1,13 @@
 from django_filters import CharFilter, FilterSet
 
-from .models import Titles
+from .models import Title
 
 
-class TitlesFilter(FilterSet):
+class TitleFilter(FilterSet):
     category = CharFilter(field_name='category__slug', lookup_expr='iexact')
     genre = CharFilter(field_name='genre__slug', lookup_expr='iexact')
     name = CharFilter(field_name='name', lookup_expr='contains')
 
     class Meta:
-        model = Titles
+        model = Title
         fields = ['category', 'genre', 'year', 'name']
