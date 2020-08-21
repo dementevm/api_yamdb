@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
 from rest_framework.serializers import ValidationError
 
-from api_comments_reviews.models import Comment, Review, Titles
+from api_comments_reviews.models import Comment, Review, Title
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -24,7 +24,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         if action == 'create':
             author = self.context['request'].user
             title = get_object_or_404(
-                Titles, id=self.context['view'].kwargs['title_id'])
+                Title, id=self.context['view'].kwargs['title_id'])
             if title.reviews.filter(author=author).exists():
                 raise ValidationError("You can't review same title twice")
         return super(ReviewSerializer, self).validate(data)

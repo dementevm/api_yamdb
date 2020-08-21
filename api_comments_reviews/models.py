@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class Review(models.Model):
-    title = models.ForeignKey(Titles, on_delete=models.CASCADE,
+    title = models.ForeignKey(Title, on_delete=models.CASCADE,
                               related_name='reviews')
     text = models.CharField(max_length=400)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
