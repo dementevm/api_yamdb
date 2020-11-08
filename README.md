@@ -31,6 +31,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 1. Download repository via github, or clone repository ```git clone https://github.com/dementevm/api_yamdb```
 2. Navigate to project folder.
 3. Execute command ```docker-compose up```
+To exit container terminal type ```exit```
 
 ### Django commands
 To use django commands via terminal from container follow next steps:
