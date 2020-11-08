@@ -37,7 +37,9 @@ To use django commands via terminal from container follow next steps:
 1. Get project container id - ```docker-container ls```
 2. Enter container terminal - ``` docker exec -it <CONTAINER ID> bash```
 Create superuser command - ```python manage.py createsuperuser```
+
 To fill database with test data - ``` python manage.py loaddata fixtures.json```
+
 To exit container terminal type ```exit```
 
 ### Built With
