@@ -1,4 +1,4 @@
-# api_yamdb
+## api_yamdb
 API part for YamDB project, that allows to get data of users, titles, rewievs and comments.
 ## Prerequisites
 Download and Install [Docker](https://www.docker.com/).
@@ -27,19 +27,25 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-
 ```
 sudo chmod +x /usr/local/bin/docker-compose
 ```
-### Deployment
+## Deployment
 1. Download repository via github, or clone repository ```git clone https://github.com/dementevm/api_yamdb```
 2. Navigate to project folder.
 3. Execute command ```docker-compose up```
-#### Django commands
+
+### Django commands
 To use django commands via terminal from container follow next steps:
 1. Get project container id - ```docker-container ls```
 2. Enter container terminal - ``` docker exec -it <CONTAINER ID> bash```
 Create superuser command - ```python manage.py createsuperuser```
 Fillful database with test data - ``` python manage.py loaddata fixtures.json```
-###### Built With
+
+### Built With
 [Django](https://www.djangoproject.com/) - web framework.
+
 [Django REST Framework](https://www.django-rest-framework.org/) - toolkit for building Web APIs.
+
 [Gunicorn](https://gunicorn.org/) - a Python WSGI HTTP Server for UNIX.
+
 [Docker](https://www.docker.com/) - an open platform for developing, shipping, and running applications.
+
 [Python](https://www.python.org/) - 🐍
